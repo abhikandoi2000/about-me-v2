@@ -98,11 +98,16 @@
     <script type="text/javascript" src="./js/gallery.js"></script>
     <script type="text/javascript">
             $(function() {
+                width = document.width;
+                sidemargin = (width - 968)/2;
+                margin = '0px '+ sidemargin + 'px';
+                $('.content.text').css({'margin':margin});
+
                 leftoffset = {
                   "#home":0,
-                  "#education":1288,
-                  "#aim":2576,
-                  "#philosophy":3864
+                  "#education":width,
+                  "#aim":width*2,
+                  "#philosophy":width*3
                 };
                 $('ul.nav a').bind('click',function(event){
                     var $anchor = $(this);
@@ -117,6 +122,8 @@
                     }, 1000);
                     event.preventDefault();
                 });
+
+                $('h1.logo a').unbind('click');
             });
     </script>
   </body>

@@ -124,11 +124,10 @@ a {
 }
 
 #scroller {
-  width: 6440px;
+  width: 15000px;
 }
 
 .content.text {
-  margin: 0px 160px;
   float: left;
   display: inline;
 }
