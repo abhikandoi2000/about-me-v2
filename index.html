@@ -111,6 +111,8 @@
                 };
                 $('ul.nav a').bind('click',function(event){
                     var $anchor = $(this);
+                    /*Highlight tab in navigation bar*/
+                    $anchor.parent().addClass('active').siblings().removeClass('active');
                     /*
                     if you want to use one of the easing effects:
                     $('html, body').stop().animate({
