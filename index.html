@@ -153,36 +153,60 @@
     <script type="text/javascript" src="./js/gallery.js"></script>
     <script type="text/javascript" src="./js/timer.js"></script>
     <script type="text/javascript">
-            $(function() {
-                width = document.width;
-                sidemargin = (width - 968)/2;
-                margin = '0px '+ sidemargin + 'px';
-                $('.content.text').css({'margin':margin});
+      /* sets margin according to current document width and associates slide effect on click */
+      function initVerticalScroll() {
+        //console.log('resized');
+        pagewidth = document.width;
+        if(pagewidth < 968) {
 
-                leftoffset = {
-                  "#home":0,
-                  "#education":width,
-                  "#aim":width*2,
-                  "#philosophy":width*3
-                };
-                $('ul.nav a').bind('click',function(event){
-                    var $anchor = $(this);
-                    /*Highlight tab in navigation bar*/
-                    $anchor.parent().addClass('active').siblings().removeClass('active');
-                    /*
-                    if you want to use one of the easing effects:
-                    $('html, body').stop().animate({
-                        scrollLeft: $($anchor.attr('href')).offset().left
-                    }, 1500,'easeInOutExpo');
-                     */
-                    $('#content-box').stop().animate({
-                        scrollLeft: leftoffset[$anchor.attr('href')]
-                    }, 1000);
-                    event.preventDefault();
-                });
+        } else {
+          sidemargin = (pagewidth - 968) / 2;
+        }
+        margin = '0px '+ sidemargin + 'px';
+        $('.content.text').css({'margin' : margin});
 
-                $('h1.logo a').unbind('click');
-            });
+        leftoffset = {
+          "#home" : 0,
+          "#education" : pagewidth,
+          "#aim" : pagewidth * 2,
+          "#philosophy" : pagewidth * 3
+        };
+
+        //fix positioning of content div when page resizes
+        $('#content-box').stop().animate({
+                scrollLeft: leftoffset[$('ul.nav li.active a').attr('href')]
+            }, 600);
+
+        $('ul.nav a').unbind('click');
+        $('ul.nav a').bind('click',function(event){
+            var $anchor = $(this);
+            /*Highlight tab in navigation bar*/
+            $anchor.parent().addClass('active').siblings().removeClass('active');
+            /*
+            if you want to use one of the easing effects:
+            $('html, body').stop().animate({
+                scrollLeft: $($anchor.attr('href')).offset().left
+            }, 1500,'easeInOutExpo');
+             */
+            $('#content-box').stop().animate({
+                scrollLeft: leftoffset[$anchor.attr('href')]
+            }, 1000);
+            event.preventDefault();
+        });
+      }
+
+      //associate slide effect
+      $(document).ready(function(){
+        initVerticalScroll();
+      });
+
+      var timeoutId;
+      //reassociate slide effect on resize
+      $(window).resize(function(){
+        //since function is called twice upon resizing the document in certain browsers
+        window.clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(initVerticalScroll, 500);
+      });
     </script>
   </body>
 </html>
